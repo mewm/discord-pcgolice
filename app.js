@@ -30,7 +30,7 @@ client.on("message", async message => {
     } else if(message.content.indexOf('http') !== -1) {
         return;
     } else {
-        policeWithMessage(message, `@{message.author.username} Det er kun tilladt at lave beskeder med vædhæftninger eller links herinde (sletter beskeden om lidt)`);
+        policeWithMessage(message, message.author.username + " Det er kun tilladt at lave beskeder med vædhæftninger eller links herinde (sletter beskeden om lidt)");
     }
 });
 
