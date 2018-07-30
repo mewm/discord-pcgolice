@@ -5,7 +5,6 @@ const config = require("./config.js");
 async function policeWithMessage(message, warningText) {
     let warning = await message.channel.send(warningText);
     await message.delete(5000);
-    await warning.delete();
 }
 
 client.on("ready", () => {
