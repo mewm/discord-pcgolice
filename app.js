@@ -4,7 +4,7 @@ const config = require("./config.js");
 
 async function policeWithMessage(message, warningText) {
     let warning = await message.channel.send(warningText);
-    await message.delete(2000);
+    await message.delete(5000);
     await warning.delete();
 }
 
@@ -23,7 +23,7 @@ client.on("guildDelete", guild => {
 
 client.on("message", async message => {
     if (message.author.bot) return;
-
+    
     if (message.channel.name !== config.channel) return;
 
     if (message.attachments.array().length !== 0) {
@@ -31,9 +31,9 @@ client.on("message", async message => {
     } else if(message.content.indexOf('http') !== -1) {
         return;
     } else {
-        policeWithMessage(message, "Please only post attachments in here " + message.author.username + " (removing in a few seconds)");
+        policeWithMessage(message, "Det er kun tilladt at lave beskeder med vædhæftninger eller links herinde @" + message.author.username + " (sletter beskeden om lidt)");
     }
 });
 
-
+console.log('Logging in with' + config.token);
 client.login(config.token);
