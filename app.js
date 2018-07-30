@@ -21,6 +21,8 @@ client.on("guildDelete", guild => {
     console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
 });
 
+let warnings = {};
+
 client.on("message", async message => {
     if (message.author.bot) return;
     
@@ -31,7 +33,12 @@ client.on("message", async message => {
     } else if(message.content.indexOf('http') !== -1) {
         return;
     } else {
-        policeWithMessage(message, message.author.username + " Det er kun tilladt at lave beskeder med vædhæftninger eller links herinde (sletter beskeden om lidt)");
+        let username = message.author.username;
+        let knownWarnings = warnings[username] || 0;
+        warnings[username] = ++knownWarnings;
+        console.log(knownWarnings);
+        console.log(warnings);
+        policeWithMessage(message, `For ${warnings[username]} gang, ${message.author.username}, det er kun tilladt at lave beskeder med vædhæftninger eller links herinde (sletter beskeden om lidt)`);
     }
 });
 
