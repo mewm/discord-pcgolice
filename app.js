@@ -4,7 +4,7 @@ const config = require("./config.js");
 
 async function policeWithMessage(message, warningText) {
     let warning = await message.channel.send(warningText);
-    await message.delete(5000);
+    await message.delete(10000);
     await warning.delete();
 }
 
@@ -36,9 +36,8 @@ client.on("message", async message => {
         let username = message.author.username;
         let knownWarnings = warnings[username] || 0;
         warnings[username] = ++knownWarnings;
-        console.log(knownWarnings);
-        console.log(warnings);
-        policeWithMessage(message, `For ${warnings[username]} gang, ${message.author.username}, det er kun tilladt at lave beskeder med vædhæftninger eller links herinde (sletter beskeden om lidt)`);
+        console.log(message.author);
+        policeWithMessage(message, `${message.author.toString()} det er kun tilladt at poste vedhæftninger eller links herinde. Din besked vil blive slettet om lidt. (${warnings[username]}. advarsel)`);
     }
 });
 
