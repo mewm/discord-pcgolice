@@ -49,13 +49,9 @@ function botspam(message)
         .then(function (response) {
             let $ = cheerio.load(response.data);
             let attendees = [];
-            let attendeesNames = $('h3:contains("Tabel over tilmeldinger")').next().next().children().children().children(':nth-child(2)').map(function (i, e) {
+            let attendeesNames = $('.username').map(function (i, e) {
                 let row = $(e);
                 let name = row.text();
-                if(name === 'Nickname') {
-                    return false;
-                }
-                
                 attendees.push(name);
             });
 
