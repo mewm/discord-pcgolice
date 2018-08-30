@@ -4,12 +4,15 @@ const config = require("./config.js");
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-const pcgeeksLan3Url = 'https://pc-geeks.dk/events/pc-geeks-lan-3/';
+const pcgeeksLanUrl = 'https://pc-geeks.dk/events/pc-geeks-lan-3/';
+
+const DELETE_DELAY_POLICING = 10000;
 
 async function policeWithMessage(message, warningText) {
     let warning = await message.channel.send(warningText);
-    await message.delete(10000);
-    await warning.delete();
+    warning.delete(DELETE_DELAY_POLICING).catch(err => console.log(`Could not delete bot message: ${err}`));
+    message.delete(DELETE_DELAY_POLICING).catch(err => console.log(`Could not delete user message: ${err}`));
+
 }
 
 client.on("ready", () => {
@@ -30,22 +33,33 @@ let warnings = {};
 client.on("message", async message => {
     if (message.author.bot) return;
     
-    if (message.channel.name === config.channel_to_police) {
-        policeChannel(message);
-        return;
+    switch (message.channel.name) {
+        case config.channel_to_police:
+            policeChannel(message);
+            break;
+        case config.botspam_channel:
+            botspam(message);
+            break;
+        default:
+            break;
     }
 
-    if (message.channel.name === config.botspam_channel) {
-      botspam(message);
-      return;
-    }
+    // if (message.channel.name === config.channel_to_police) {
+    //     policeChannel(message);
+    //     return;
+    // }
+
+    // if (message.channel.name === config.botspam_channel) {
+    //   botspam(message);
+    //   return;
+    // }
 
 });
 
 function botspam(message)
 {
     if(message.content === '!lan') {
-        axios.get(pcgeeksLan3Url)
+        axios.get(pcgeeksLanUrl)
         .then(function (response) {
             let $ = cheerio.load(response.data);
             let attendees = [];
