@@ -8,3 +8,4 @@ services:
       - ./:/app
     command: ash -c 'npm install; node app.js'
     working_dir: /app
+    restart: always
