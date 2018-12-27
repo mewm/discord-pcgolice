@@ -4,7 +4,7 @@ const config = require("./config.js");
 const cheerio = require('cheerio');
 const axios = require('axios');
 
-const pcgeeksLanUrl = 'https://pc-geeks.dk/events/pc-geeks-lan-3/';
+const pcgeeksLanUrl = 'https://pc-geeks.dk/events/pc-geeks-lan-4/';
 
 const DELETE_DELAY_POLICING = 10000;
 
@@ -12,7 +12,6 @@ async function policeWithMessage(message, warningText) {
     let warning = await message.channel.send(warningText);
     warning.delete(DELETE_DELAY_POLICING).catch(err => console.log(`Could not delete bot message: ${err}`));
     message.delete(DELETE_DELAY_POLICING).catch(err => console.log(`Could not delete user message: ${err}`));
-
 }
 
 client.on("ready", () => {
