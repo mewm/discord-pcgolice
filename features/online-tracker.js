@@ -9,7 +9,7 @@ class OnlineTracker
         this.db = database;
         
         this.guild = client.guilds.get(config.guild);
-        this.logChannel = this.guild.channels.get(config.botspam_channel);
+        this.logChannel = this.guild.channels.get(config.log_channel);
         this.generalChannel = this.guild.channels.get(config.general_channel);
     }
 
