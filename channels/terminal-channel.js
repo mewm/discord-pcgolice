@@ -53,7 +53,7 @@ function textRelay(client, message)
     channel.send(intendedMessage);
 
     // Log in logchannel
-    logchannel = client.channels.find(x => x.name === config.log_channel);
+    logchannel = client.channels.get(config.log_channel);
     logchannel.send(`${message.author.toString()} just relayed following in ${channel.name}: ${intendedMessage}`);
 }
 
