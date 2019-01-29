@@ -38,7 +38,7 @@ class OnlineTracker
 
     reportNewRecord()
     {
-        // this.generalChannel.send(`Sådan, ny rekord af online brugere: ${this.onlineRecord}!`);
+        this.generalChannel.send(`Sådan, ny rekord af online brugere: ${this.onlineRecord}!`);
         this.logChannel.send(`New online record detected: ${this.onlineRecord}`);
     }
 

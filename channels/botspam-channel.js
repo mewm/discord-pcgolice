@@ -17,7 +17,6 @@ function run(message)
 
             // console.log(attendeesNames);
             message.channel.send(`${attendees.length} er tilmeldt: ${attendees.join(', ')}`);
-            console.log(message.channel);
         })
         .catch(function (error) {
             console.log(error);
