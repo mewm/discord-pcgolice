@@ -16,6 +16,8 @@ class OnlineTracker
     async startTracking()
     {
         this.onlineRecord = await this.getRecord();
+        this.logChannel.send(`Bot started/rebooted. Record of online users is currently ${this.onlineRecord}`);
+
         await this.track();
         setInterval(async () => {
             await this.track();
