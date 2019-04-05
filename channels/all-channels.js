@@ -1,6 +1,6 @@
 const config = require("../config.js");
 
-class OnlineTracker
+class AllChannels
 {
     constructor(client, config, database)
     {
@@ -30,8 +30,6 @@ class OnlineTracker
         let onlineMembers = members.filter(member => {
             return member.presence.status !== 'offline' && member.user.bot === false;
         }).array().length;
-        
-        console.log(`Online: ${onlineMembers}`);
 
         if(onlineMembers > this.onlineRecord) {
             this.onlineRecord = onlineMembers;

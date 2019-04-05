@@ -2,7 +2,7 @@ const config = require("../config.js");
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-function run(message)
+async function run(message, database)
 {
     if(message.content === '!lan') {
         axios.get(config.lan_url)
@@ -22,6 +22,17 @@ function run(message)
             console.log(error);
         });
     }
-}
 
+    if(message.content === '!peak') {
+            let query = 'select * from online_tracker order by date desc limit 1';
+            let result = await database.query(query);
+
+            if(result.rows.length === 0) {
+                return 0;
+            }
+
+        message.channel.send(`${result.rows[0].online_users}`);
+    }
+    
+}
 module.exports = run;
