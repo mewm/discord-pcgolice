@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const moment = require('moment');
 
 
-async function run(message, database)
+async function run(message, database, client, onlineTracker)
 {
     if (message.content === '!lan') {
         axios.get(config.lan_url)
@@ -35,6 +35,10 @@ async function run(message, database)
         
         let date = moment(result.rows[0].date).format('dddd, MMMM Do YYYY, H:mm:ss');
         message.channel.send(`${result.rows[0].online_users} - ${date}`);
+    }
+
+    if (message.content === '!online') {
+        message.channel.send(`Lige nu ${onlineTracker.currentOnline()}`);
     }
 
 }

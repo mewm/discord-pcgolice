@@ -2,11 +2,12 @@
     const Discord = require("discord.js");
     const client = new Discord.Client();
     const config = require("./config.js");
+    const OnlineTracker = require("./features/online-tracker.js");
     const policeChannel = require("./channels/police-channel.js");
     const botspamChannel = require("./channels/botspam-channel.js");
     const terminalChannel = require("./channels/terminal-channel.js");
 //    const AllChannels = require("./channels/all-channels.js");
-    const OnlineTracker = require("./features/online-tracker.js");
+    
     const { Client } = require("pg");
     const database = new Client({
         user: config.database.user,
@@ -15,6 +16,8 @@
         password: config.database.password,
         port: 5432
     });
+    
+    let onlineTracker;
 
     await database.connect();
 
@@ -22,8 +25,8 @@
 
     client.on("ready", async () => {
         client.user.setActivity(`You better not disobey!`);
-        let tracker = new OnlineTracker(client, config, database);
-        tracker.startTracking();
+        onlineTracker = new OnlineTracker(client, config, database);
+        onlineTracker.startTracking();
     });
 
     client.on("message", async message => {
@@ -33,7 +36,7 @@
                 policeChannel(message);
             break;
             case config.botspam_channel:
-                botspamChannel(message, database);
+                botspamChannel(message, database, client, onlineTracker);
             break;
             case config.terminal_channel:
                 terminalChannel(client, message);

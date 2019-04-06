@@ -7,6 +7,7 @@ class OnlineTracker
         this.client = client;
         this.config = config;
         this.db = database;
+        this.currently_online = 0;
         
         this.guild = client.guilds.get(config.guild);
         this.logChannel = this.guild.channels.get(config.log_channel);
@@ -32,12 +33,17 @@ class OnlineTracker
         }).array().length;
         
         console.log(`Online: ${onlineMembers}`);
-
+        this.currently_online = onlineMembers;
         if(onlineMembers > this.onlineRecord) {
             this.onlineRecord = onlineMembers;
             this.reportNewRecord();   
             await this.storeRecord();
         }
+    }
+    
+    currentOnline()
+    {
+        return this.currently_online;
     }
 
     reportNewRecord()
