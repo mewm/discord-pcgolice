@@ -7,7 +7,7 @@ module.exports = {
   terminal_channel: process.env["TERMINAL_CHANNEL_ID"], 
   log_channel: process.env["LOG_CHANNEL_ID"],
   police_delay: 10000,
-  lan_url: 'https://pc-geeks.dk/events/pc-geeks-lan-4/',
+  lan_url: 'https://pc-geeks.dk/events/pc-geeks-lan-5/',
 
   database: {
     user: process.env["POSTGRES_USER"],
