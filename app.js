@@ -33,7 +33,7 @@
         if (message.author.bot) return;
         switch (message.channel.id) {
             case config.police_channel:
-                policeChannel(message);
+                policeChannel(message, client, config, database);
             break;
             case config.botspam_channel:
                 botspamChannel(message, database, client, onlineTracker);
