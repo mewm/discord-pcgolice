@@ -4,7 +4,7 @@
   "description": "## Prerequisites",
   "main": "app.js",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.4.2",
     "moment": "^2.24.0",
