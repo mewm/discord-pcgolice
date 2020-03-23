@@ -29,7 +29,7 @@ class OnlineTracker
     {
         let members  = this.guild.members;
         let onlineMembers = members.filter(member => {
-            return member.presence.status !== 'offline' && member.user.bot === false;
+            return member.presence.status !== 'offline'; // && member.user.bot === false;
         }).array().length;
         
         console.log(`Online: ${onlineMembers}`);
