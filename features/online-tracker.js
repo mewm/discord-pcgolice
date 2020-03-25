@@ -36,7 +36,7 @@ class OnlineTracker
         this.currently_online = onlineMembers;
         if(onlineMembers > this.onlineRecord) {
             this.onlineRecord = onlineMembers;
-//            this.reportNewRecord(); 
+            this.reportNewRecord(); 
             await this.storeRecord();
         }
     }
