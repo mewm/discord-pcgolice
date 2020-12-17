@@ -6,7 +6,6 @@
     const policeChannel = require("./channels/police-channel.js");
     const botspamChannel = require("./channels/botspam-channel.js");
     const terminalChannel = require("./channels/terminal-channel.js");
-//    const AllChannels = require("./channels/all-channels.js");
     
     const { Client } = require("pg");
     const database = new Client({
@@ -20,13 +19,17 @@
     let onlineTracker;
 
     await database.connect();
-
-//    const allChannels = new AllChannels;
+    
+    let clientWasReady = false;
 
     client.on("ready", async () => {
+        if(clientWasReady === true) {
+            return;
+        }
         client.user.setActivity(`You better not disobey!`);
         onlineTracker = new OnlineTracker(client, config, database);
         onlineTracker.startTracking();
+        clientWasReady = true;
     });
 
     client.on("message", async message => {

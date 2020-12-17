@@ -1,11 +1,7 @@
-const config = require("../config.js");
-
 class OnlineTracker
 {
     constructor(client, config, database)
     {
-        this.client = client;
-        this.config = config;
         this.db = database;
         this.currently_online = 0;
         
@@ -22,7 +18,7 @@ class OnlineTracker
         await this.track();
         setInterval(async () => {
             await this.track();
-        }, 20000);
+        }, 30000);
     }
 
     async track()
@@ -36,8 +32,8 @@ class OnlineTracker
         this.currently_online = onlineMembers;
         if(onlineMembers > this.onlineRecord) {
             this.onlineRecord = onlineMembers;
-            this.reportNewRecord(); 
             await this.storeRecord();
+            this.reportNewRecord(); 
         }
     }
     

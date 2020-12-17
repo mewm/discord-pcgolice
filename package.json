@@ -1,14 +1,14 @@
 {
   "name": "userfeedbot",
   "version": "1.0.0",
-  "description": "## Prerequisites",
+  "description": "",
   "main": "app.js",
   "dependencies": {
-    "axios": "^0.18.0",
-    "cheerio": "^1.0.0-rc.2",
-    "discord.js": "^11.4.2",
-    "moment": "^2.24.0",
-    "pg": "^7.8.0"
+    "axios": "^0.18.1",
+    "cheerio": "^1.0.0-rc.3",
+    "discord.js": "^11.6.4",
+    "moment": "^2.29.1",
+    "pg": "^7.18.2"
   },
   "devDependencies": {},
   "scripts": {
