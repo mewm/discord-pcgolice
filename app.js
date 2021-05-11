@@ -1,7 +1,4 @@
-console.log('test');
-
 (async function() {
-    console.log('123');
     const Discord = require("discord.js");
     const client = new Discord.Client();
     const config = require("./config.js");
@@ -20,9 +17,7 @@ console.log('test');
     });
     
     let onlineTracker;
-    console.log('1234');
     await database.connect();
-    console.log('12345');
     
     client.once("ready", async () => {
         console.log('Client ready');
