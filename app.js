@@ -17,19 +17,13 @@
     });
     
     let onlineTracker;
-
     await database.connect();
     
-    let clientWasReady = false;
-
-    client.on("ready", async () => {
-        if(clientWasReady === true) {
-            return;
-        }
+    client.once("ready", async () => {
+        console.log('Client ready');
         client.user.setActivity(`You better not disobey!`);
         onlineTracker = new OnlineTracker(client, config, database);
         onlineTracker.startTracking();
-        clientWasReady = true;
     });
 
     client.on("message", async message => {
@@ -47,7 +41,6 @@
             default:
             break;
         }
-
     });
 
     client.login(config.token);
