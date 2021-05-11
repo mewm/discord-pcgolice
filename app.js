@@ -1,4 +1,7 @@
+console.log('test');
+
 (async function() {
+    console.log('123');
     const Discord = require("discord.js");
     const client = new Discord.Client();
     const config = require("./config.js");
@@ -17,19 +20,15 @@
     });
     
     let onlineTracker;
-
+    console.log('1234');
     await database.connect();
+    console.log('12345');
     
-    let clientWasReady = false;
-
-    client.on("ready", async () => {
-        if(clientWasReady === true) {
-            return;
-        }
+    client.once("ready", async () => {
+        console.log('Client ready');
         client.user.setActivity(`You better not disobey!`);
         onlineTracker = new OnlineTracker(client, config, database);
         onlineTracker.startTracking();
-        clientWasReady = true;
     });
 
     client.on("message", async message => {
@@ -47,7 +46,6 @@
             default:
             break;
         }
-
     });
 
     client.login(config.token);

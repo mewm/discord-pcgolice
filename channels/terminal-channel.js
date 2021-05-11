@@ -9,7 +9,7 @@ function run(client, message)
 
 function textRelay(client, message) 
 {
-    if(!message.member.roles.some(r=>["Server Moderator"].includes(r.name)) ) {
+    if(!message.member.roles.cache.some(r=>["Server Moderator"].includes(r.name)) ) {
         message.channel.send('Sorry, only Server Moderators can use this feature');
         return;
     }
@@ -41,7 +41,7 @@ function textRelay(client, message)
     if(perhapsUser.length > 0 && perhapsUser.substr(0,1) === '@') {
         // Username detected, find it
         const mentionedUser = perhapsUser.substr(1, perhapsUser.length);
-        const mentionedUserId = message.guild.members.find(x => x.nickname === mentionedUser);
+        const mentionedUserId = message.guild.members.cache.find(x => x.nickname === mentionedUser);
         if(mentionedUserId) {
             // Replace mentionedUser in intendedMessage with their ID
             intendedMessage = intendedMessage.replace('@' + mentionedUser, '<@' + mentionedUserId.id + '>');
@@ -49,11 +49,11 @@ function textRelay(client, message)
     }
 
     // Relay the message
-    const channel = client.channels.get(channelId);
+    const channel = client.channels.cache.get(channelId);
     channel.send(intendedMessage);
 
     // Log in logchannel
-    logchannel = client.channels.get(config.log_channel);
+    logchannel = client.channels.cache.get(config.log_channel);
     logchannel.send(`${message.author.toString()} just relayed following in ${channel.name}: ${intendedMessage}`);
 }
 

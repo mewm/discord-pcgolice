@@ -15,7 +15,7 @@ async function run(message, client, config, database)
         let author       = message.author;
         let userWarnings = await database.query('select count(1) from user_warnings where user_id = $1', [author.id]);
         userWarnings     = userWarnings.rows[0].count;
-        let guild        = client.guilds.get(config.guild);
+        let guild        = client.guilds.cache.get(config.guild);
         let username     = author.username;
         userWarnings     = ++userWarnings;
 
@@ -29,9 +29,9 @@ async function run(message, client, config, database)
         ]);
 
         if (userWarnings % 3 === 0) {
-            let log       = guild.channels.get(config.log_channel);
-            let mutedRole = message.guild.roles.find(r => r.name === "Muted");
-            await message.member.addRole(mutedRole.id);
+            let log       = guild.channels.cache.get(config.log_channel);
+            let mutedRole = message.guild.roles.cache.find(r => r.name === "Muted");
+            await message.member.roles.add(mutedRole.id);
 
             // Add mute to database
             let muteDurationInSeconds = 60;
@@ -51,7 +51,7 @@ async function run(message, client, config, database)
             });
 
             setTimeout(async () => {
-                await message.member.removeRole(mutedRole.id);
+                await message.member.roles.remove(mutedRole.id);
                 log.send(`Unmuted ${message.author.username} after violating #brugerfeed rules`);
             }, muteDurationInSeconds * 1000);
         }
@@ -61,8 +61,8 @@ async function run(message, client, config, database)
 async function policeWithMessage(message, warningText)
 {
     let warning = await message.channel.send(warningText);
-    warning.delete(config.police_delay).catch(err => console.log(`Could not delete bot message: ${err}`));
-    message.delete(config.police_delay).catch(err => console.log(`Could not delete user message: ${err}`));
+    warning.delete({timeout: config.police_delay, reason: 'Rule violation'}).catch(err => console.log(`Could not delete bot message: ${err}`));
+    message.delete({timeout: config.police_delay, reason: 'Rule violation'}).catch(err => console.log(`Could not delete user message: ${err}`));
 }
 
 module.exports = run;

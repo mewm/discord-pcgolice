@@ -1,7 +1,7 @@
 version: '2'
 services:
   node:
-    image: node:8.8.1-alpine
+    image: node:14.16-alpine
     env_file:
       - ./.env
     volumes: 

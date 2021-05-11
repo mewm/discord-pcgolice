@@ -5,9 +5,9 @@ class OnlineTracker
         this.db = database;
         this.currently_online = 0;
         
-        this.guild = client.guilds.get(config.guild);
-        this.logChannel = this.guild.channels.get(config.log_channel);
-        this.generalChannel = this.guild.channels.get(config.general_channel);
+        this.guild = client.guilds.cache.get(config.guild);
+        this.logChannel = this.guild.channels.cache.get(config.log_channel);
+        this.generalChannel = this.guild.channels.cache.get(config.general_channel);
     }
 
     async startTracking()
@@ -23,7 +23,7 @@ class OnlineTracker
 
     async track()
     {
-        let members  = this.guild.members;
+        let members  = this.guild.members.cache;
         let onlineMembers = members.filter(member => {
             return member.presence.status !== 'offline'; // && member.user.bot === false;
         }).array().length;
@@ -44,8 +44,8 @@ class OnlineTracker
 
     reportNewRecord()
     {
-        this.generalChannel.send(`Sådan, ny rekord af online brugere: ${this.onlineRecord}!`);
-        this.logChannel.send(`New online record detected: ${this.onlineRecord}`);
+        // this.generalChannel.send(`Sådan, ny rekord af online brugere: ${this.onlineRecord}!`);
+        // this.logChannel.send(`New online record detected: ${this.onlineRecord}`);
     }
 
     async storeRecord()
