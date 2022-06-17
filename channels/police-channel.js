@@ -38,7 +38,7 @@ async function run(message, client, config, database)
             let now                   = new Date();
             let unmuteDate            = now.setSeconds(now.getSeconds() + muteDurationInSeconds);
 
-            log.send(`Muted ${author.username} for violating #brugerfeed rules. Expires at ${formatDate(unmuteDate)}`);
+            log.send(`Muted ${author.username} for violating #brugerfeed rules. Expires at ${moment(unmuteDate).format('DD.MM.YYYY HH:MM')}`);
             database.query('insert into user_mutes (user_id, username, unmuted_date, created_at) values($1, $2, $3, $4)', [
                 author.id,
                 author.username,
@@ -63,21 +63,6 @@ async function policeWithMessage(message, warningText)
     let warning = await message.channel.send(warningText);
     warning.delete({timeout: config.police_delay, reason: 'Rule violation'}).catch(err => console.log(`Could not delete bot message: ${err}`));
     message.delete({timeout: config.police_delay, reason: 'Rule violation'}).catch(err => console.log(`Could not delete user message: ${err}`));
-}
-
-function formatDate(date) 
-{
-    if (typeof(date) === "number") {
-        d = new Date();
-        d.setTime(date);
-    } else if (d instanceof Date) {
-        d = date
-    } else {
-        return date;
-    }
-
-    const zeropadStr    = (num) => num < 10 ? "0"+num : ""+num
-    return `${zeropadStr(d.getDate())}.${zeropadStr(d.getMonth())}.${zeropadStr(d.getFullYear())} ${zeropadStr(d.getHours())}:${zeropadStr(d.getMinutes())}`
 }
 
 module.exports = run;
