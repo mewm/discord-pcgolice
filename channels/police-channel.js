@@ -1,4 +1,5 @@
 const config = require("../config.js");
+const moment = require("moment")
 
 let warnings = {};
 
@@ -38,7 +39,7 @@ async function run(message, client, config, database)
             let now                   = new Date();
             let unmuteDate            = now.setSeconds(now.getSeconds() + muteDurationInSeconds);
 
-            log.send(`Muted ${author.username} for violating #brugerfeed rules. Expires at ${unmuteDate}`);
+            log.send(`Muted ${author.username} for violating #brugerfeed rules. Expires at ${moment(unmuteDate).format('DD.MM.YYYY HH:MM')}`);
             database.query('insert into user_mutes (user_id, username, unmuted_date, created_at) values($1, $2, $3, $4)', [
                 author.id,
                 author.username,
